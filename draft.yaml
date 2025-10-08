@@ -1,0 +1,33 @@
+# draft.yaml - Versión Final y Correcta
+
+models:
+  Cliente:
+    id: id
+    cedula: string:10 unique
+    nombre: string:50
+    apellido: string:50
+    # No se necesitan timestamps si tu tabla original no los tenía
+
+  Producto:
+    id: id
+    nombre: string:100
+    stock: integer default:0
+
+  Compra:
+    id: id
+    cliente_id: foreignId
+    fecha_compra: timestamp useCurrent
+    # La relación se infiere del nombre "cliente_id"
+
+  DetalleCompra:
+    id: id
+    compra_id: foreignId
+    producto_id: foreignId
+    cantidad: integer
+
+Controllers:
+  Cliente:
+    resource: all
+
+  Producto:
+    resource: all
