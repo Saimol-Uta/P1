@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\DetalleCompraController;
 use App\Http\Controllers\ProductoController;
 use App\Models\DetalleCompra;
 use Illuminate\Support\Facades\Route;
@@ -16,4 +17,5 @@ Route::get('/', function () {
 Route::resource('cliente',ClienteController::class);
 Route::resource('producto',ProductoController::class);
 Route::resource('compra',CompraController::class);
-Route::resource('DetalleCompra',DetalleCompra::class);
+Route::resource('DetalleCompra', DetalleCompraController::class);
+Route::post('DetalleCompra/buscar', [DetalleCompraController::class, 'searchByCedula'])->name('DetalleCompra.searchByCedula');
