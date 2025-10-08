@@ -53,6 +53,7 @@
                 <tr>
                     <th>ID Detalle</th>
                     <th>ID Compra</th>
+                    <th>Cliente</th>
                     <th>Producto</th>
                     <th>Cantidad</th>
                 </tr>
@@ -62,6 +63,7 @@
                 <tr>
                     <td>{{ $d['id'] }}</td>
                     <td>{{ $d['id_compra'] }}</td>
+                    <td>{{ $cliente_buscado['nombre'] }} {{ $cliente_buscado['apellido'] }}</td>
                     <td>{{ $d['producto']['nombre'] ?? '—' }}</td>
                     <td>{{ $d['cantidad'] }}</td>
                 </tr>
