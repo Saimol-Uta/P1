@@ -25,7 +25,7 @@
                             <a class="nav-link" href="/cliente">Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white ms-2" href="/compras/nueva">Nueva Compra</a>
+                            <a class="nav-link btn btn-primary text-white ms-2" href="/compra/create">Nueva Compra</a>
                         </li>
                     </ul>
                 </div>
