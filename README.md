@@ -62,5 +62,85 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 
 composer require reliese/laravel
+composer require reliese/laravel
+
+php artisan vendor:publish --tag=reliese-models
 php artisan vendor:publish --tag=reliese-models
 php artisan code:models
+
+-- Crear la base de datos
+CREATE DATABASE IF NOT EXISTS sistema_compras;
+USE sistema_compras;
+
+-- ================================
+-- TABLA: CLIENTES
+-- ================================
+CREATE TABLE clientes (
+    cedula VARCHAR(10) PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL
+);
+
+-- ================================
+-- TABLA: PRODUCTOS
+-- ================================
+CREATE TABLE productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    stock INT NOT NULL DEFAULT 0
+);
+
+-- ================================
+-- TABLA: COMPRAS
+-- ================================
+CREATE TABLE compras (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cedula_cliente VARCHAR(10) NOT NULL,
+    fecha_compra DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (cedula_cliente) REFERENCES clientes(cedula)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+-- ================================
+-- TABLA: DETALLE_COMPRAS
+-- ================================
+CREATE TABLE detalle_compras (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_compra INT NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL CHECK (cantidad > 0),
+    FOREIGN KEY (id_compra) REFERENCES compras(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (id_producto) REFERENCES productos(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+-- ================================
+-- EJEMPLOS DE INSERCIÓN DE DATOS
+-- ================================
+
+-- Clientes
+INSERT INTO clientes (cedula, nombre, apellido) VALUES
+('0102030405', 'Juan', 'Pérez'),
+('1102233445', 'María', 'López');
+
+-- Productos
+INSERT INTO productos (nombre, stock) VALUES
+('Laptop Lenovo', 10),
+('Mouse Logitech', 25),
+('Teclado Redragon', 15);
+
+-- Compra de Juan Pérez
+INSERT INTO compras (cedula_cliente) VALUES ('0102030405');
+
+-- Detalle de la compra (Juan compra 1 laptop y 2 mouses)
+INSERT INTO detalle_compras (id_compra, id_producto, cantidad) VALUES
+(1, 1, 1),
+(1, 2, 2);
+
+-- Disminuir stock después de compra (opcional)
+UPDATE productos SET stock = stock - 1 WHERE id = 1;
+UPDATE productos SET stock = stock - 2 WHERE id = 2;
